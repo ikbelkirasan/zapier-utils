@@ -1,25 +1,19 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "short_name": "Zapier Utils",
+  "name": "Zapier Utils Chrome Extension",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "description": "Zapier Utils Chrome Extension",
+  "homepage_url": "http://www.example.com",
+  "icons": {
+    "16": "icons/logo192.png",
+    "48": "icons/logo192.png",
+    "128": "icons/logo192.png"
+  },
+  "permissions": ["https://www.zapier.com/*", "https://zapier.com/*"],
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "content_security_policy": "script-src 'self' 'sha256-tyxxwDjteX4HFIv3n9bYCltZSkdP1wphjUApbNQZBdM='; object-src 'self'"
 }
