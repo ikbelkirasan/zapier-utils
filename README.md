@@ -14,7 +14,7 @@ We'll keep adding more tools in the future.
 
 ## Demo
 
-### Find The zap that is associated with a webhook URL
+### Find the zap that is associated with a webhook URL
 
 ![](images/findZapByWebhookUrl.gif)
 
