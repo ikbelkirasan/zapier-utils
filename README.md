@@ -2,7 +2,7 @@
 
 > ℹ Work in progress
 
-This projects provides you with tools that allow you perform actions on Zapier that can't be done with the current version of its UI.
+This project provides you with tools that allow you perform actions on Zapier that can't be done with the current version of its UI.
 
 ## Features
 
