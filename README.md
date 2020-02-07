@@ -31,3 +31,7 @@ We'll keep adding more tools in the future.
 5. Make sure you open Zapier website in a new tab after installing the extension.
 
 That's it. Enjoy! :)
+
+## License
+
+MIT
