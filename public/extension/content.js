@@ -2,7 +2,7 @@
 
 const actions = {
   findZapByWebhookUrl(url) {
-    const getNodes = zap => {
+    const getNodes = (zap) => {
       let nodes = [];
       for (let nodeId in zap.nodes) {
         const node = zap.nodes[nodeId];
@@ -12,21 +12,21 @@ const actions = {
       return nodes;
     };
 
-    const getZapNodes = async zapId => {
+    const getZapNodes = async (zapId) => {
       const response = await fetch(
         `https://zapier.com/api/v3/zaps/${zapId}/nodes`
       );
-      const { objects: nodes } = await response.json();
+      const { objects: nodes = [] } = await response.json();
       return nodes;
     };
 
     const fetchAccounts = async () => {
       const response = await fetch("https://zapier.com/api/v3/accounts");
-      const { objects: accounts } = await response.json();
+      const { objects: accounts = [] } = await response.json();
       return accounts;
     };
 
-    const fetchZaps = async accountId => {
+    const fetchZaps = async (accountId) => {
       const response = await fetch(
         `https://zapier.com/api/v3/zaps?account_id=${accountId}`
       );
@@ -39,7 +39,7 @@ const actions = {
       const allZaps = [];
       for (const accountIndex in accounts) {
         const account = accounts[accountIndex];
-        const { objects: zaps } = await fetchZaps(account.id);
+        const { objects: zaps = [] } = await fetchZaps(account.id);
         allZaps.push(...zaps);
       }
       return allZaps;
@@ -47,28 +47,28 @@ const actions = {
 
     const getZapFromWebhookId = async (zapId, webhookId) => {
       const nodes = await getZapNodes(zapId);
-      const webhookZap = nodes.find(obj => {
+      const webhookZap = nodes.find((obj) => {
         return obj.code === webhookId;
       });
 
       return webhookZap;
     };
 
-    const findWebhooks = zap => {
+    const findWebhooks = (zap) => {
       const nodes = getNodes(zap);
-      const webhookNodes = nodes.filter(node => {
+      const webhookNodes = nodes.filter((node) => {
         return node["selected_api"] === "WebHookAPI";
       });
 
-      return webhookNodes.map(node => {
+      return webhookNodes.map((node) => {
         return {
           ...node,
-          zapId: zap.id
+          zapId: zap.id,
         };
       });
     };
 
-    const getWebhooks = zaps => {
+    const getWebhooks = (zaps) => {
       const webhookZaps = [];
       for (let zapId in zaps) {
         const zap = zaps[zapId];
@@ -77,8 +77,9 @@ const actions = {
       return webhookZaps;
     };
 
-    const parseWebhookUrl = webhookUrl => {
-      const regex = /https\:\/\/hooks\.zapier\.com\/hooks\/catch\/(\w+)\/(\w+)\/?/;
+    const parseWebhookUrl = (webhookUrl) => {
+      const regex =
+        /https\:\/\/hooks\.zapier\.com\/hooks\/catch\/(\w+)\/(\w+)\/?/;
       const matches = regex.exec(webhookUrl);
       if (!matches) {
         throw new Error("Invalid Webhook URL");
@@ -87,11 +88,11 @@ const actions = {
       const [, accountId, webhookId] = matches;
       return {
         accountId,
-        webhookId
+        webhookId,
       };
     };
 
-    const findZapForWebhookUrl = async webhookUrl => {
+    const findZapForWebhookUrl = async (webhookUrl) => {
       const zaps = await getAllZaps();
       const webhookZaps = getWebhooks(zaps);
       const { webhookId } = parseWebhookUrl(webhookUrl);
@@ -122,7 +123,7 @@ const actions = {
     }
 
     return run(url);
-  }
+  },
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -132,22 +133,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (payload.action === "findZapByWebhookUrl") {
       actions
         .findZapByWebhookUrl(payload.url)
-        .then(zapUrl => {
+        .then((zapUrl) => {
           if (zapUrl) {
             sendResponse({
               type: "success",
-              url: zapUrl
+              url: zapUrl,
             });
           } else {
             sendResponse({
-              type: "error"
+              type: "error",
             });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           sendResponse({
             type: "error",
-            error: error.message
+            error: error.message,
           });
         });
 

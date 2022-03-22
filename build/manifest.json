@@ -2,7 +2,7 @@
   "short_name": "Zapier Utils",
   "name": "Zapier Utils Chrome Extension",
   "version": "1.0.0",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "description": "Zapier Utils Chrome Extension",
   "homepage_url": "http://www.example.com",
   "icons": {
@@ -10,8 +10,8 @@
     "48": "icons/logo192.png",
     "128": "icons/logo192.png"
   },
-  "permissions": ["https://www.zapier.com/*", "https://zapier.com/*"],
-  "browser_action": {
+  "host_permissions": ["https://www.zapier.com/*", "https://zapier.com/*"],
+  "action": {
     "matches": ["https://www.zapier.com/*", "https://zapier.com/*"],
     "default_popup": "index.html",
     "default_title": "Open the popup"
@@ -22,5 +22,7 @@
       "js": ["extension/content.js"]
     }
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-inline'; object-src 'self'"
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }
